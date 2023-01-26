@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
+
+int main() {
+    int serv_sock, cli_sock, port_num = 12345;
+    struct sockaddr_in serv_addr, cli_addr;
+    socklen_t clilen;
+    int n;
+
+    // Create a socket
+    serv_sock = socket(AF_INET, SOCK_STREAM, 0);
+
+    // Clear address structure
+    memset((char *) &serv_addr, 0, sizeof(serv_addr));
+
+    // Set address and port
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = INADDR_ANY;
+    serv_addr.sin_port = htons(port_num);
+
+    // Bind the socket to the address and port
+    bind(serv_sock, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
+
+    // Listen for incoming connections
+    listen(serv_sock, 5);
+    clilen = sizeof(cli_addr);
+
+    // Accept an incoming connection
+    cli_sock = accept(serv_sock, (struct sockaddr *) &cli_addr, &clilen);
+
+    // Generate a random number between 100 and 999
+    int rand_num = rand() % 900 + 100;
+
+    // Send the random number to the client
+    n = write(cli_sock, &rand_num, sizeof(rand_num));
+
+    // Close the sockets
+    close(cli_sock);
+    close(serv_sock);
+
+    return 0;
+}
