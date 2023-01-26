@@ -1,0 +1,26 @@
+import socket
+def fheit_to_cels(fheit):
+cels = (fheit - 32) * 5/9
+return cels
+def main():
+host = "10.0.2.4"
+port = 12345
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((host, port))
+
+
+s.listen(1)
+print(f"[*] Listening on {host}:{port}")
+conn, addr = s.accept()
+print(f"[*] Connection from {addr}")
+while True:
+data = connect.recv(1024).decode()
+if not data:
+break
+print(f"[*] Received {data} from {addr}")
+celsius = fheit_to_ cels (float(data))
+conn.send(str(celsius).encode())
+print(f"[*] Sent {cels} to {addr}")
+conn.close()
+if __name__ == "__main__":
+main()
