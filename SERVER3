@@ -1,0 +1,30 @@
+import random
+import socket
+import threading
+class QOTDserv:
+def __init__(self, host= ’10.0.2.4’, port=8080):
+self.host = host
+self.port = port
+self.serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+self.serv.bind((self.host, self.port))
+self.quotes = [
+"Be there for others",
+"Never leave yourself behind",
+"Move on please"
+]
+def listen(self):
+
+
+self.serv.listen()
+while True:
+client_socket, client_address = self.serv.accept()
+print(f'Connection from {cli_addr} has been established.')
+cli_socket.send(random.choice(self.quotes).encode())
+cli_socket.close()
+def start(self):
+print(f'Server listening on {self.host}:{self.port}...')
+listen_thread = threading.Thread(target=self.listen)
+listen_thread.start()
+if __name__ == '__main__':
+serv = QOTDServ()
+serv.start()
