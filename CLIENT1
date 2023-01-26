@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+
+int main() {
+    int sockfd, port_num = 12345;
+    struct sockaddr_in serv_addr;
+    int n;
+    int rand_num;
+
+    // Create a socket
+    serv_sock = socket(AF_INET, SOCK_STREAM, 0);
+
+    // Clear address structure
+    memset((char *) &serv_addr, 0, sizeof(serv_addr));
+
+    // Set address and port
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = inet_addr("10.0.2.4");
+    serv_addr.sin_port = htons(port_num);
+
+    // Connect to the server
+    connect(serv_sock, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
+
+    // Read the random number from the server
+    n = read(serv_sock, &rand_num, sizeof(rand_num));
+
+    // Print the random number
+    printf("The random number is: %d\n", rand_num);
+
+    // Close the socket
+    close(serv_sock);
+
+    return 0;
+}
