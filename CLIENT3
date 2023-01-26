@@ -1,0 +1,18 @@
+import socket
+class QOTDcli:
+def __init__(self, host= ’10.0.2.4’ , port=8080):
+self.host = host
+self.port = port
+self.cli = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+13
+
+def get_quote(self):
+self.cli.connect((self.host, self.port))
+quote = self.cli.recv(1024).decode()
+print(f'Received quote: "{quote}"')
+self.cli.close()
+if __name__ == '__main__':
+cli = QOTDcli()
+cli.get_quote()
+
